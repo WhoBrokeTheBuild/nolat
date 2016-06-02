@@ -203,7 +203,16 @@ auto it = myMap.find(42);
 
 if (it != myMap.end()) {
     // The iterator is valid, and we can use it to get the value
-    cout << it.value << endl;
+    cout << it.second << endl;
+}
+```
+
+Iterators for maps contain two pieces of information; the key and the value.
+They follow the same style of the pair<> class like so:
+
+```cpp
+for (auto it : myMap) {
+    cout << "Value at " << it.first << " is " << it.second << endl;
 }
 ```
 
@@ -230,4 +239,14 @@ use the clear method like so:
 
 ```cpp
 myMap.clear();
+```
+
+Finally, to check the size of a map or if it is empty, you can use the following:
+
+```cpp
+int size = myMap.size();
+
+if (myMap.empty()) {
+    // the map is empty
+}
 ```
