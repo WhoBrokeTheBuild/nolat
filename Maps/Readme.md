@@ -6,11 +6,12 @@ You will create and use two different type of map data structures
 
 A map is a data structure that provides a key-value lookup table. They are
 also sometimes known as Dictonaries (like in C#) In C++ the standard map
-implementation is called map works for most things.
+implementation is called map<>, and it works well in most scenarios.
 
 ```cpp
 #include <iostream>
 #include <map>
+#include <vector>
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -22,7 +23,7 @@ int main(int argc, char** argv) {
     map<string, int> sMap; // Provides a string-to-int lookup table
     sMap["hello"] = 1;
     sMap["world"] = 2;
-    cout << "sMap[\"hello\"] is " << sMap["hello"] <<
+    cout << "sMap[\"hello\"] is " << sMap["hello"] << " and " <<
             "sMap[\"world\"] is " << sMap["world"] << endl;
 
     map<string, vector<int>> svMap; // A more complex structure,
@@ -31,13 +32,13 @@ int main(int argc, char** argv) {
     svMap["myList"] = { 1, 2, 3, 4 };
     svMap["yourList"] = { -1, -2, -3, -4 };
 
-    cout << "svMap[\"myList\"] contains:" << endl
+    cout << "svMap[\"myList\"] contains:" << endl;
     for (int i : svMap["myList"]) {
         cout << i << " ";
     }
     cout << endl;
 
-    cout << "svMap[\"yourList\"] contains:" << endl
+    cout << "svMap[\"yourList\"] contains:" << endl;
     for (int i : svMap["yourList"]) {
         cout << i << " ";
     }
@@ -56,7 +57,7 @@ collision happens when two keys generate the same hash, making one or
 both of them inaccessible. Collisions are very rare however and for most
 use cases can be ignored.
 
-In C++, the standard hash map implementation is called unordered_map. The
+In C++, the standard hash map implementation is called unordered_map<>. The
 reason it is called this is because, unlike the standard map implementation,
 hash maps cannot guarantee any kind of order. So the order you put things
 in, is not necessarily the order you will pull them out.
@@ -114,15 +115,17 @@ Here is how you use them:
 map<int, int> myMap = { {1, 43}, {0, 42}, {3, 45}, {2, 44} };
 // This is the "standard" way, and also the most wordy
 for (map<int, int>::iterator it = myMap.begin(); it != myMap.end(); ++it) {
-    cout << it.second << endl;
+    cout << it->second << endl;
 }
 
 // You can make this a little more legible by using the auto keyword
 for (auto it = myMap.begin(); it != myMap.end(); ++it) {
-    cout << it.second << endl;
+    cout << it->second << endl;
 }
 
 // And even more so by using C++11 style foreach loops
+// You'll notice that this one used a . while the other two use ->, this is because
+// auto tries to make your life easier
 for (auto it : myMap) {
     cout << it.second << endl;
 }
@@ -136,7 +139,7 @@ what about iterating backwards? You might be tempted to rewrite it as such:
 ```cpp
 // Warning: This code is a bad example, do not use
 for (auto it = myMap.end(); it != myMap.begin(); ++it) {
-    cout << it.second << endl;
+    cout << it->second << endl;
 }
 ```
 
@@ -145,7 +148,7 @@ point to any element in the collection. The way to do this properly is like this
 
 ```cpp
 for (auto it = myMap.rbegin(); it != myMap.rend(); ++it) {
-    cout << it.second << endl;
+    cout << it->second << endl;
 }
 ```
 
@@ -203,7 +206,7 @@ auto it = myMap.find(42);
 
 if (it != myMap.end()) {
     // The iterator is valid, and we can use it to get the value
-    cout << it.second << endl;
+    cout << it->second << endl;
 }
 ```
 
